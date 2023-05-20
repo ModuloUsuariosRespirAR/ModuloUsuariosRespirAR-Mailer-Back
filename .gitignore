@@ -1,0 +1,43 @@
+# Carpeta node_modules
+node_modules/
+
+# Archivo de variables de entorno
+.env
+
+# Archivos de registro
+logs/
+*.log
+
+# Carpeta de compilación
+dist/
+
+# Archivos de respaldo y temporales
+*.bak
+*.swp
+*.tmp
+
+# Dependencias y paquetes de desarrollo
+# (Asegúrate de ajustar esto en función de tus herramientas y estructura de proyecto)
+package-lock.json
+yarn.lock
+.pnpm
+.pnpm-debug.log
+
+# Carpeta de cobertura de pruebas
+coverage/
+
+# Archivos y carpetas generados por herramientas de construcción
+# (Por ejemplo, si estás utilizando Webpack, Gulp, etc.)
+build/
+public/
+
+# Archivos de IDE y editores de texto
+.vscode/
+.idea/
+*.sublime-*
+*.sw?
+
+# Archivos de configuración personalizados
+# (Ajusta esto en función de tus necesidades y herramientas utilizadas)
+.eslintcache
+babel.config.js
