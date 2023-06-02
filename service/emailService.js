@@ -1,7 +1,7 @@
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-const msg = require('./models/msgModel.js');
-const { CORREO_ENVIADO_EXITOSAMENTE,CORREOS_ENVIADOS_EXITOSAMENTE, ERROR_ENVIAR_CORREO,ERROR_ENVIAR_CORREOS } = require('./utils/constants.js')
+const msg = require('../models/msgModel.js');
+const { CORREO_ENVIADO_EXITOSAMENTE,CORREOS_ENVIADOS_EXITOSAMENTE, ERROR_ENVIAR_CORREO,ERROR_ENVIAR_CORREOS } = require('../utils/constants.js')
 
  async function enviarCorreo(email) {
      try {

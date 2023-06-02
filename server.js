@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 require('dotenv').config();
 const Joi = require('joi');
-const emailService = require('./emailService.js');
+const emailService = require('./service/emailService.js');
 const { validateEmailFields,validateMultipleEmails } = require('./utils/validator.js');
 const msg = require('./models/msgModel.js');
 const multipleMsg = require('./models/multipleMsgModel');
