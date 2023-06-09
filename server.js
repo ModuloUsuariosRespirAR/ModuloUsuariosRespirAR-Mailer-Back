@@ -7,10 +7,11 @@ app.use(express.json());
 require('dotenv').config();
 const Joi = require('joi');
 const emailService = require('./service/emailService.js');
-const { validateEmailFields,validateMultipleEmails } = require('./utils/validator.js');
-const msg = require('./models/msgModel.js');
-const multipleMsg = require('./models/multipleMsgModel');
-const { BASE_URL , ERROR_ENVIAR_CORREO,ERROR_ENVIAR_CORREOS } = require('./utils/constants.js')
+const keyRockService = require('./service/KeyrockService.js');
+const { validateEmailFields,validateMultipleEmails } = require('./utils/Validator.js');
+const msg = require('./models/MsgModel.js');
+const multipleMsg = require('./models/MultipleMsgModel.js');
+const { BASE_URL , ERROR_ENVIAR_CORREO,ERROR_ENVIAR_CORREOS } = require('./utils/Constants.js')
 
 app.post(BASE_URL, async (req, res) => {
     const { to, subject, text } = req.body;
@@ -52,6 +53,20 @@ app.post(BASE_URL+'/multiple', async (req, res) => {
     }
 });
 
-app.listen(3000, () => {
-    console.log('Servidor iniciado en el puerto 3000');
+app.put(BASE_URL+'/keyrock/change-password', async (req, res) => {
+
+    let result = await keyRockService.authKeyRock(req.body);
+    res.send(result);
+    //authKeyRock()
+
+});
+
+app.post(BASE_URL+'/change-password', async (req, res) => {
+    let result = await keyRockService.buscarUsuarioPorEmail();
+    res.send(result);
+});
+
+
+app.listen(process.env.PORT, () => {
+    console.log('Servidor iniciado en el puerto ',process.env.PORT);
 });
