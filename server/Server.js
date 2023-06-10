@@ -1,5 +1,3 @@
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
 import express from "express";
 import AppRouter from "./../routes/Router.js";
 import cors from "cors";

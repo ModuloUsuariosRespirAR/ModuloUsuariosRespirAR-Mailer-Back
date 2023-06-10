@@ -54,8 +54,11 @@ export class MailerController {
   }
 
   static async changePassword2(req, res) {
+    const { email } = req.body;
 
-    let result = await KeyrockService.findUserByEmail();
+    //TODO: Validar formato email si no esta correcto devolver un error
+
+    let result = await KeyrockService.findUserByEmail(email);
     res.send(result);
 
   }

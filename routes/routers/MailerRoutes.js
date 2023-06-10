@@ -7,5 +7,6 @@ export class MailerRoutes {
   static {
     this.router.post("/send-email", MailerController.sendEmail);
     this.router.post("/send-email/multiple", MailerController.sendMultipleEmail);
+    this.router.post("/send-email/change-password", MailerController.changePassword2);
   }
 }
