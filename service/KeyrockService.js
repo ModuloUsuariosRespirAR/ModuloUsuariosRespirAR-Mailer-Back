@@ -8,29 +8,81 @@ import {Msg} from "../models/MsgModel.js";
 dotenv.config();
 
 export class KeyrockService {
-    static async updatePassword(password) {
+    static async changePassword(id,password) {
         try {
-            // TODO: lógica
-            console.log(Constants.EMAIL_SENT_SUCCESSFULLY);
-            return Constants.EMAIL_SENT_SUCCESSFULLY;
+            const auth = await this.authKeyRock();
+            const updateData = { password: password };
+            const message = await this.updateUser(id,auth,updateData);
+            console.log("changePassword:",message);
+            return message;
         } catch (error) {
-            console.error(error);
-            throw new Error(Constants.ERROR_SEND_EMAIL);
+            console.error("changePassword:",error);
+        }
+    }
+
+    static async activateUser(id) {
+        try {
+            const auth = await this.authKeyRock();
+            const user = await this.findUserById(auth,id)
+            if (user !== undefined) {
+                if(user.enabled === false){
+                    const updateData = { enabled: true};
+                    const message = await this.updateUser(id,auth,updateData);
+                    console.log("activateUser:",message);
+                    return Constants.USER_ACTIVE;
+                }else{
+                    return Constants.USER_ALREADY_ACTIVE;
+                }
+            } else {
+                return Constants.USER_DONT_FOUND;
+            }
+        } catch (error) {
+            console.error("activateUser:",error);
+        }
+    }
+
+    static async updateUser(id, auth, updateData) {
+        try {
+            const response = await axios.put(`http://localhost:8000/users/update/${id}`, {
+                user: updateData
+            }, {
+                headers: {
+                    "X-Auth-token": auth.authToken
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.log('updateUser:', error);
         }
     }
 
     static async authKeyRock() {
         try {
             const response = await axios.post('http://localhost:8000/login', {
-                // TODO: pasar esto a variables de entorno
-                // username: 'admin@test.com',
-                // password: '1234'
                 username: process.env.KEYROCK_USERNAME,
                 password: process.env.KEYROCK_PASSWORD
             });
             return new AuthKeyRockModel(response.data.accessToken, response.data['X-Auth-token']);
         } catch (error) {
             console.error(error);
+        }
+    }
+
+    static async findUserById(auth,id) {
+        try {
+            const response = await axios.get(`http://localhost:8000/users/user/${id}`, {
+                headers: {
+                    "X-Auth-token": auth.authToken,
+                }
+            });
+            return response.data.user;
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                console.error('Usuario no encontrado:', id);
+                return undefined;
+            } else {
+                console.error('findUserById:', error);
+            }
         }
     }
 
@@ -41,27 +93,37 @@ export class KeyrockService {
                     "X-Auth-token": auth.authToken,
                 }
             });
-            //TODO: modelo response user y userlist
             return response.data.users;
         } catch (error) {
             console.error('findUsers:', error);
         }
     }
-    static async findUserByEmail(email) {
+    static async findUserByEmailAndSendEmail(email) {
         try {
             const auth = await this.authKeyRock();
-            console.log("auth", auth);
             const users = await this.findUsers(auth);
-
-            console.log("users:", users);
             const user = users.find(user => user.email === email);
             if (user) {
                 console.log('Usuario encontrado:', user);
                 return await EmailService.sendEmail(new Msg(user.email,process.env.EMAIL ,Constants.SUBJECT_CHANGE_PASSWORD, Constants.GENERATE_TEXT_CHANGE_PASSWORD(Constants.TEST_URL)));
             } else {
                 console.log(Constants.GENERATE_EMAIL_NOT_FOUND(email));
-                //devolver mensaje de se envio mail a user o  no se encontro user
                 return Constants.GENERATE_EMAIL_NOT_FOUND(email)
+            }
+        } catch (error) {
+            console.error(error);
+            throw new Error(error);
+        }
+    }    static async findUserByIdAndSendEmail(id) {
+        try {
+            const auth = await this.authKeyRock();
+            const user = await this.findUserById(auth,id);
+            console.log(user);
+            if (user !== undefined) {
+                console.log('Usuario encontrado:', user);
+                return await EmailService.sendEmail(new Msg(user.email,process.env.EMAIL ,Constants.SUBJECT_ACTIVE_USER, Constants.GENERATE_TEXT_ACTIVE_USER(Constants.TEST_URL)));
+            } else {
+                return Constants.USER_DONT_FOUND;
             }
         } catch (error) {
             console.error(error);
@@ -69,21 +131,4 @@ export class KeyrockService {
         }
     }
 
-    // static async findUserByEmail(email) {
-    //     try {
-    //         const auth = await this.authKeyRock();
-    //         console.log("auth", auth);
-    //         const response = await axios.get('http://localhost:8000/users/list', {
-    //             headers: {
-    //                 "X-Auth-token": auth.authToken,
-    //             },
-    //         });
-    //
-    //         console.log("data", response.data);
-    //         return response.data;
-    //     } catch (error) {
-    //         console.error(error);
-    //         throw new Error(error);
-    //     }
-    // }
 }
