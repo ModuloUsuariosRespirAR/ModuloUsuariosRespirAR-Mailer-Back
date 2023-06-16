@@ -43,11 +43,12 @@ export class KeyrockService {
 
     static async updateUser(id, auth, updateData) {
         try {
-            const response = await axios.put(`http://localhost:8000/users/update/${id}`, {
+            const response = await axios.put(`${process.env.HTTP_HOST}:${process.env.BACK_PORT}/users/update/${id}`, {
                 user: updateData
             }, {
                 headers: {
-                    "X-Auth-token": auth.authToken
+                    "X-Auth-token": auth.authToken,
+                    "accessToken": auth.accessToken
                 }
             });
             return response.data;
@@ -58,7 +59,7 @@ export class KeyrockService {
 
     static async authKeyRock() {
         try {
-            const response = await axios.post('http://localhost:8000/login', {
+            const response = await axios.post(`${process.env.HTTP_HOST}:${process.env.BACK_PORT}/login`, {
                 username: process.env.KEYROCK_USERNAME,
                 password: process.env.KEYROCK_PASSWORD
             });
@@ -70,7 +71,7 @@ export class KeyrockService {
 
     static async findUserById(auth,id) {
         try {
-            const response = await axios.get(`http://localhost:8000/users/user/${id}`, {
+            const response = await axios.get(`${process.env.HTTP_HOST}:${process.env.BACK_PORT}/users/user/${id}`, {
                 headers: {
                     "X-Auth-token": auth.authToken,
                 }
@@ -88,7 +89,7 @@ export class KeyrockService {
 
     static async findUsers(auth) {
         try {
-            const response = await axios.get('http://localhost:8000/users/list', {
+            const response = await axios.get(`${process.env.HTTP_HOST}:${process.env.BACK_PORT}/users/list`, {
                 headers: {
                     "X-Auth-token": auth.authToken,
                 }
@@ -121,7 +122,7 @@ export class KeyrockService {
             console.log(user);
             if (user !== undefined) {
                 console.log('Usuario encontrado:', user);
-                return await EmailService.sendEmail(new Msg(user.email,process.env.EMAIL ,Constants.SUBJECT_ACTIVE_USER, Constants.GENERATE_TEXT_ACTIVE_USER(Constants.TEST_URL)));
+                return await EmailService.sendEmail(new Msg(user.email,process.env.EMAIL ,Constants.SUBJECT_ACTIVE_USER, Constants.GENERATE_TEXT_ACTIVE_USER(`${process.env.HTTP_HOST}:${process.env.FRONT_PORT}/pages/activate-user/${user.id}`)));
             } else {
                 return Constants.USER_DONT_FOUND;
             }
