@@ -1,0 +1,206 @@
+{
+	"info": {
+		"_postman_id": "ca269742-30ea-4630-8bed-8b3d47e0661c",
+		"name": "APIS Mailer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18207592"
+	},
+	"item": [
+		{
+			"name": "Mailer",
+			"item": [
+				{
+					"name": "send-email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"to\": \"example@gmail.com\",\r\n  \"subject\": \"Nuevo Asunto\",\r\n  \"text\": \"Hola, esto es un correo de prueba.Nueva\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/mailer/send-email",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"mailer",
+								"send-email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "send-email-multiple",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"emailsTo\": [\"example@gmail.com\",\"example2@gmail.com\"],\r\n  \"subject\": \"Email Multiple\",\r\n  \"text\": \"Hola, esto es un correo de prueba con MULTIPLE DESTINATARIO\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/mailer/send-email/multiple",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"mailer",
+								"send-email",
+								"multiple"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change-password",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"3aad8daa-07a4-4d64-b3d8-417f6f210833\",\r\n    \"password\": \"1234\"\r\n}   ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/keyrock/change-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"keyrock",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "send-email-change-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"example@gmail.com\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/mailer/send-email/change-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"mailer",
+								"send-email",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activate-user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Auth-token",
+								"value": "{{auth}}",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"3aad8daa-07a4-4d64-b3d8-417f6f210833\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/keyrock/activate-user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"keyrock",
+								"activate-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "send-email-activate-user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Auth-token",
+								"value": "{{auth}}",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"3aad8daa-07a4-4d64-b3d8-417f6f210833\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/mailer/send-email/active-user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"mailer",
+								"send-email",
+								"active-user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

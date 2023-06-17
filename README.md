@@ -23,8 +23,9 @@ ModuloUsuariosRespirAR-Mailer es un proyecto de servidor que utiliza Node.js, Ex
 
 Antes de ejecutar el servidor, asegúrate de configurar las siguientes variables de entorno en un archivo `.env` en la raíz del proyecto:
 SENDGRID_API_KEY=your_sendgrid_api_key
-SENDER_EMAIL=your_sender_email
-Reemplaza `your_sendgrid_api_key` con tu clave API de SendGrid y `your_sender_email` con la dirección de correo electrónico desde la cual deseas enviar los mensajes.
+EMAIL=your_sender_email
+PASSWORD=your_sender_password
+Reemplaza `your_sendgrid_api_key` con tu clave API de SendGrid y `your_sender_email` con la dirección de correo electrónico y `your_sender_password` con la contaseña del correo electronico desde la cual deseas enviar los mensajes.
 
 ## Uso
 
@@ -35,4 +36,5 @@ Reemplaza `your_sendgrid_api_key` con tu clave API de SendGrid y `your_sender_em
    "subject": "Asunto del correo",
    "text": "Contenido del correo"
    }
+3. Recomendamos usar las apis configuradas en la carpeta postman para las demas funcionalidades
 
