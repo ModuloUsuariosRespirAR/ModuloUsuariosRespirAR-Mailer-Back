@@ -106,7 +106,7 @@ export class KeyrockService {
             const user = users.find(user => user.email === email);
             if (user) {
                 console.log('Usuario encontrado:', user);
-                return await EmailService.sendEmail(new Msg(user.email,process.env.EMAIL ,Constants.SUBJECT_CHANGE_PASSWORD, Constants.GENERATE_TEXT_CHANGE_PASSWORD(Constants.TEST_URL)));
+                return await EmailService.sendEmail(new Msg(user.email,process.env.EMAIL ,Constants.SUBJECT_CHANGE_PASSWORD, Constants.GENERATE_TEXT_CHANGE_PASSWORD(`${process.env.HTTP_HOST}:${process.env.FRONT_PORT}/pages/modify-password/${user.id}`)));
             } else {
                 console.log(Constants.GENERATE_EMAIL_NOT_FOUND(email));
                 return Constants.GENERATE_EMAIL_NOT_FOUND(email)

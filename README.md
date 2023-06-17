@@ -1,10 +1,12 @@
 # ModuloUsuariosRespirAR-Mailer
 
-ModuloUsuariosRespirAR-Mailer es un proyecto de servidor que utiliza Node.js, Express y Nodemailer para enviar correos electrónicos a los usuarios.
+ModuloUsuariosRespirAR-Mailer es un proyecto de servidor que utiliza Node.js, Express y Sendgrid para enviar correos electrónicos a los usuarios de Keyrock.
 
 ## Características
 
-- Envío de correos electrónicos a través de Nodemailer.
+- Envío de correos electrónicos a través de Sendgrid.
+- Envío de correos electrónicos de activacion de cuenta de Keyrock
+- Envío de correos electrónicos de cambio de contraseña de Keyrock
 - Uso de variables de entorno para almacenar la configuración del correo electrónico.
 
 ## Requisitos
