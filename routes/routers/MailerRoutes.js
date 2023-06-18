@@ -4,10 +4,12 @@ import { MailerController } from "../../controllers/MailerController.js";
 export class MailerRoutes {
   static router = Router();
 
-  static {
+  static initialize() {
     this.router.post("/send-email", MailerController.sendEmail);
     this.router.post("/send-email/multiple", MailerController.sendMultipleEmail);
     this.router.post("/send-email/change-password", MailerController.changePassword);
     this.router.post("/send-email/active-user", MailerController.activateUser);
   }
 }
+
+MailerRoutes.initialize();
