@@ -106,7 +106,7 @@ export class KeyrockService {
             const user = users.find(user => user.email === email);
             if (user) {
                 console.log('Usuario encontrado:', user);
-                return await EmailService.sendEmail(new Msg(user.email,process.env.EMAIL ,Constants.SUBJECT_CHANGE_PASSWORD, Constants.GENERATE_TEXT_CHANGE_PASSWORD(`${process.env.HTTP_HOST}:${process.env.FRONT_PORT}/pages/modify-password/${user.id}`)));
+                return await EmailService.sendEmail(new Msg(user.email,process.env.EMAIL ,Constants.SUBJECT_CHANGE_PASSWORD, Constants.GENERATE_TEXT_CHANGE_PASSWORD(`${process.env.HTTP_HOST_FRONT}:${process.env.FRONT_PORT}/pages/modify-password/${user.id}`)));
             } else {
                 console.log(Constants.GENERATE_EMAIL_NOT_FOUND(email));
                 return Constants.GENERATE_EMAIL_NOT_FOUND(email)
@@ -122,7 +122,7 @@ export class KeyrockService {
             console.log(user);
             if (user !== undefined) {
                 console.log('Usuario encontrado:', user);
-                return await EmailService.sendEmail(new Msg(user.email,process.env.EMAIL ,Constants.SUBJECT_ACTIVE_USER, Constants.GENERATE_TEXT_ACTIVE_USER(`${process.env.HTTP_HOST}:${process.env.FRONT_PORT}/pages/activate-user/${user.id}`)));
+                return await EmailService.sendEmail(new Msg(user.email,process.env.EMAIL ,Constants.SUBJECT_ACTIVE_USER, Constants.GENERATE_TEXT_ACTIVE_USER(`${process.env.HTTP_HOST_FRONT}:${process.env.FRONT_PORT}/pages/activate-user/${user.id}`)));
             } else {
                 return Constants.USER_DONT_FOUND;
             }
